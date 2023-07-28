@@ -41,6 +41,20 @@ async function handleSearch(event) {
   }
  }
 
+ async function handleSearch(event) {
+
+  try{
+    event.preventDefault();
+    event.target.input.value = "";
+    const API = `https://maps.locationiq.com/v3/staticmap${process.env.REACT_APP_API_KEY}&q=${searchQuery}&format=json`;
+    const res = await axios.get(API);
+    setLocation(res.data[0]);
+    handleMap(res.data[0]);
+  } catch (error) {
+    console.log (error);
+  }
+ }
+
 
  function handleMap(data) {
   const API = `https://maps.locationiq.com/v3/staticmap?key=${process.env.REACT_APP_API_KEY}&center=${data.lat},${data.lon}&zoom=9`;
